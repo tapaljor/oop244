@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <iomanip>
 #include "Product.cpp"
 #include "utility.cpp"
 
@@ -9,7 +8,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
-using std::setw;
 using std::left;
 
 int main() {
