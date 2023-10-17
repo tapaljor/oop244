@@ -53,27 +53,21 @@ int main() {
             cout << "Enter product ID to track: ";
             int trackId;
             cin >> trackId;
-/*
+
+            displayHeader();
             for (const Product& product : products) {
                 if (product.getId() == trackId) {
                     product.displayInfo();
                     break;
                 }
-            }*/
+            }
+            displayFooter();
         } else if (choice == 3) {
-
-            cout << endl << "Product Report:" << endl;
-            cout << "----------------------------------------------------------------------------------" << endl;
-            cout << left << setw(13) << "ID" 
-                << left << setw(20) << "Product Name" 
-                << left << setw(10) << "Price" 
-                << left << setw(10) << "Qty" 
-                << left << setw(20) << "Add Date" 
-                << left << setw(20) << "Sold Date" << endl;
-            cout << "----------------------------------------------------------------------------------" << endl;
+            displayHeader();
             for (const Product& product : products) {
                 product.displayInfo();
             }
+            displayFooter();
         } else if (choice == 4) {
             cout << "Exiting the program." << endl;
             break;

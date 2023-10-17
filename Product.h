@@ -25,6 +25,8 @@ public:
     void addQuantity(int qty);
     /*selling a stock*/
     void minusQuantity(int qty);
+    /*getting ID*/
+    int getId() const;
     /*Basic product info*/
     void displayInfo() const;
     /*displaying timestamp in readable date time*/

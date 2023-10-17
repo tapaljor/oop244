@@ -35,15 +35,18 @@ void menu() {
     cout << "4. Exit" << endl;
     cout << "Enter your choice: ";
 }
-void displayTimeFromTimeStamp(long int timestampInSeconds) {
-
-    // Convert the timestamp to a std::chrono::system_clock::time_point
-    std::chrono::system_clock::time_point timePoint = std::chrono::system_clock::from_time_t(timestampInSeconds);
-
-    // Format the time using strftime
-    std::time_t time = std::chrono::system_clock::to_time_t(timePoint);
-    char buffer[80];
-    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&time));
-
-    std::cout << "Formatted date and time: " << buffer << std::endl;
+void displayHeader() {
+    cout << endl << "Product Report:" << endl;
+    cout << "----------------------------------------------------------------------------------" << endl;
+    cout << left << setw(13) << "ID" 
+    << left << setw(20) << "Product Name" 
+    << left << setw(10) << "Price" 
+    << left << setw(10) << "Qty" 
+    << left << setw(20) << "Add Date" 
+    << left << setw(20) << "Sold Date" << endl;
+    cout << "----------------------------------------------------------------------------------" << endl;
 }
+void displayFooter() {
+    cout << "----------------------------------------------------------------------------------" << endl;
+}
+

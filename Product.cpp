@@ -56,3 +56,6 @@ string Product::displayFormattedDate(int type) const {
         return buffer;
     }
 }
+int Product::getId() const {
+    return id;
+}
