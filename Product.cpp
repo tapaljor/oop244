@@ -11,26 +11,6 @@ using std::endl;
 using std::setw;
 using std::left;
 
-/*main/base class definition or implementation*/
-/*adding a stock, mainly by staff*/
-void Product::addQuantity(int qty) {
-    quantity = quantity - qty;
-}
-/*selling a stock, mainly by staff and self service*/
-void Product::minusQuantity(int qty) {
-    quantity = quantity - qty;
-}
-/*Basic product info*/
-void Product::displayInfo() const {
-
-    cout << left << setw(13) << id 
-        << left << setw(20) << name.substr(0, 18)   
-        << left << setw(10) << price 
-        << left << setw(10) << quantity
-        << left << setw(20) << displayFormattedDate(1)
-        /*displayFormattedDate 1 for add date and 2 for sold date*/
-        << left << setw(20) << displayFormattedDate(2) << endl;
-}
 string Product::displayFormattedDate(int type) const {
 
     long int timeStamp {0};
@@ -55,7 +35,4 @@ string Product::displayFormattedDate(int type) const {
     } else {
         return buffer;
     }
-}
-int Product::getId() const {
-    return id;
 }

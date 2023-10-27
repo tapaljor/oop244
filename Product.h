@@ -6,29 +6,73 @@ using std::cout;
 
 /*main/base class for grocery management*/
 class Product {
-private:
+protected:
     int id;
     string name;
     double price;
-    int quantity;
     long int addDate;
     long int soldDate;
 public:
-    /*constructor and initializing the private data members attribute*/
-    Product(string name, int id, double price, int quantity, long int addDate, long int soldDate)
-        :name(name), id(id), price(price), quantity(quantity), addDate(addDate), soldDate(soldDate) { }
+    /*default constructor*/
+    Product() {
+        id = 0;
+        name = "NA";
+        price = 0.0;
+        addDate = 0;
+        soldDate = 0;
+    }
+    /*constructor and initializing the protected data members attribute*/
+    Product(int id, string name, double price, long int addDate, long int soldDate)
+        :id(id), name(name), price(price), addDate(addDate), soldDate(soldDate) {}
     /*object destructor*/
     ~Product () {
-        //cout << "Destroyer doing its thing..";
+        //cout << "Destroyer clearing the memory occupied by Product..";
     }
-    /*adding a stock*/
-    void addQuantity(int qty);
-    /*selling a stock*/
-    void minusQuantity(int qty);
-    /*getting ID*/
-    int getId() const;
-    /*Basic product info*/
-    void displayInfo() const;
+
+    /*virtual functions prototype*/
+    virtual double calculateTotalPrice() {
+        return price;
+    }
+    virtual void displayProductInfo() const {
+    cout << left << setw(13) << id 
+        << left << setw(20) << name.substr(0, 18)   
+        << left << setw(10) << price
+        << left << setw(20) << displayFormattedDate(addDate)
+        << left << setw(20) << displayFormattedDate(2) << endl;
+    }
+
+    /*getters of attributes*/
+    int getId() const {
+        return id;
+    }
+    string getName() const {
+        return name;
+    }
+    double getPrice() const {
+        return price;
+    }
+
     /*displaying timestamp in readable date time*/
     string displayFormattedDate(int type) const;
 };
+class Vegetable : public Product {
+protected:
+    double weight; //in kg
+public: 
+    Vegetable(int id, string name, double price, double weight) 
+        : Product(id, name, price), weight(weight) {}
+
+    /*derived class function overides virtual function*/
+    double calculateTotalPrice() override;
+    void displayProductInfo() const;
+};
+class Oil : public Product {
+protected:
+    double volume; //in litres
+public:
+    Oil(int id, string name, double price)
+        : Product(id, name, price), volume(volume) {}
+    double calculateTotalPrice() override;
+    void displayProductInfo() const;
+};
+
