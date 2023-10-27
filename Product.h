@@ -34,11 +34,12 @@ public:
         return price;
     }
     virtual void displayProductInfo() const {
-    cout << left << setw(13) << id 
+        cout << left << setw(13) << id 
         << left << setw(20) << name.substr(0, 18)   
         << left << setw(10) << price
+        << left << setw(10) << "1"  
         << left << setw(20) << displayFormattedDate(addDate)
-        << left << setw(20) << displayFormattedDate(2) << endl;
+        << left << setw(20) << displayFormattedDate(soldDate) << endl;
     }
 
     /*getters of attributes*/
@@ -59,12 +60,19 @@ class Vegetable : public Product {
 protected:
     double weight; //in kg
 public: 
-    Vegetable(int id, string name, double price, double weight) 
-        : Product(id, name, price), weight(weight) {}
+    Vegetable(int id, string name, double price, double weight, long int addDate, long int soldDate) 
+        : Product(id, name, price, addDate, soldDate), weight(weight) {}
 
     /*derived class function overides virtual function*/
     double calculateTotalPrice() override;
-    void displayProductInfo() const;
+    virtual void displayProductInfo() const {
+        cout << left << setw(13) << id 
+        << left << setw(20) << name.substr(0, 18)   
+        << left << setw(10) << price
+        << left << setw(10) << weight << " KG" 
+        << left << setw(20) << displayFormattedDate(addDate)
+        << left << setw(20) << displayFormattedDate(soldDate) << endl;
+    }
 };
 class Oil : public Product {
 protected:

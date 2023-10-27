@@ -41,7 +41,7 @@ void displayHeader() {
     cout << left << setw(13) << "ID" 
     << left << setw(20) << "Product Name" 
     << left << setw(10) << "Price" 
-    << left << setw(10) << "Qty" 
+    << left << setw(10) << "Unit" 
     << left << setw(20) << "Add Date" 
     << left << setw(20) << "Sold Date" << endl;
     cout << "----------------------------------------------------------------------------------" << endl;
