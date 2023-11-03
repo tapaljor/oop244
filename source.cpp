@@ -1,77 +1,68 @@
+/*
+Assignment: Grocery Management
+Group number: 3
+- Kartik Jindal
+- Meg Smith
+- Sheba Birhanu
+- Tashi Paljor
+Course: OOP244V1A
+*/
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Product.cpp"
-#include "utility.cpp"
+#include <memory>
+#include "Product.h"
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
 using std::left;
+using std::unique_ptr;
+using std::make_unique;
 
 int main() {
 
-    /*instantiation product with parameters to be used in constructor using vector, which is flexible*/
-    vector <Product> products;
+    Utils* u;
+    /*initializeing base class as pointer*/
+    vector<unique_ptr<Product>> products;
 
     while (true) {
-
-        /*calling menu function*/
-        menu();
+        
+        u->menu();
 
         int choice;
         cin >> choice;
 
-        if (choice == 1) {
-
-            string name {};
-            double price {0.0};
-            int quantity {0};
-
-            cout << "Enter product name: ";
-            cin.ignore();
-            getline(std::cin, name);
-            cout << "Enter price: ";
-            cin >> price;
-            cout << "Enter quantity: ";
-            cin >> quantity;
-
-            /*dynamically adding an object to vector which has other objects*/
-            products.push_back (Product (
-                    name, 
-                    generateRandomNumber(), 
-                    price, 
-                    quantity, 
-                    generateCurrentTimeStamp(),
-                    0
-                ));
-
-        } else if (choice == 2) {
-            cout << "Enter product ID to track: ";
-            int trackId;
-            cin >> trackId;
-
-            displayHeader();
-            for (const Product& product : products) {
-                if (product.getId() == trackId) {
-                    product.displayInfo();
-                    break;
+        switch (choice) {
+            case 1: {
+                unique_ptr<Vegetable> veg = make_unique<Vegetable>();
+                veg->addProduct();
+                products.push_back(std::move(veg));
+                break;
+            }
+            case 2: {
+                unique_ptr<Fruit> fruit = make_unique<Fruit>();
+                fruit->addProduct();
+                products.push_back(std::move(fruit));
+                break;
+            }
+            case 13: 
+                u->displayHeader();
+                for (const unique_ptr<Product>& product : products) {
+                    product->displayProductInfo();
                 }
-            }
-            displayFooter();
-        } else if (choice == 3) {
-            displayHeader();
-            for (const Product& product : products) {
-                product.displayInfo();
-            }
-            displayFooter();
-        } else if (choice == 4) {
-            cout << "Exiting the program." << endl;
-            break;
-        } else {
-            cout << "Invalid choice. Please select a valid option." << endl;
+                u->displayFooter();
+                break;
+            case 22:
+                cout << "Exiting the program." << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please select a valid option." << endl;
+                break;
         }
     }
-    return 0;
 }
+
+
+
