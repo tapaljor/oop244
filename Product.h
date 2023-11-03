@@ -24,18 +24,14 @@ protected:
     double price;
     int shelf;
     long addDate;
-    int expiryYear;
-    int expiryMonth;
-    int expiryDay;
+    long expiryDate;
     Utils *u;
 public:
     // Constructors 
     Product(int id = 0, string name = "NA", double price = 0.0, 
-            int shelf = 0, long addDate = 0, int expiryYear = 0, 
-            int expiryMonth = 0, int expiryDay = 0) 
+            int shelf = 0, long addDate = 0, long expiryDate = 0) 
             : id(id), name(std::move(name)), price(price), 
-            shelf(shelf), addDate(addDate), expiryYear(expiryYear), 
-            expiryMonth(expiryMonth), expiryDay(expiryDay) {}
+            shelf(shelf), addDate(addDate), expiryDate(expiryDate) {} 
 
     virtual ~Product() {}
 
@@ -44,6 +40,9 @@ public:
     }
     // virtual functions
     virtual void addProduct() {
+        int y = 0;
+        int m = 0;
+        int d = 0;
         id = u->generateRandomNumber();
         addDate = u->generateCurrentTimeStamp();
              
@@ -55,23 +54,23 @@ public:
 
         do {
             cout << "Enter expiry date (yyyy mm dd): ";
-            cin >> expiryYear >> expiryMonth >> expiryDay;
-        } while (!u->checkDate(expiryYear, expiryMonth, expiryDay));
+            cin >> y >> m >> d;
+        } while (!u->checkDate(y, m, d));
+
+        string eD = std::to_string(y)+"-"+std::to_string(m)+"-"+std::to_string(d);
+        expiryDate = u->convertDateToTimestamp(eD);
 
         cout << "Enter price (only number or decimal): ";
         cin >> price;
     }
     virtual void displayProductInfo() const {
         
-        string eD = std::to_string(expiryYear) + "-" + 
-                    std::to_string(expiryMonth) + "-" + 
-                    std::to_string(expiryDay);
         cout << left << setw(13) << id 
          << left << setw(20) << name.substr(0, 18)   
          << left << setw(10) << calculateTotalPrice() 
          << left << setw(6) << shelf  
-         << left << setw(15) << u->displayFormattedDate(addDate)
-         << left << setw(15) << eD;
+         << left << setw(15) << u->displayFormattedDate(addDate) 
+         << left << setw(15) << u->displayFormattedDate(expiryDate);
     }
 
     // Getters can be made const
@@ -84,6 +83,9 @@ public:
     double getPrice() const {
         return price;
     }
+    int getExpiryDate () const {
+        return expiryDate;
+    }
 };
 /*derive class/inheritance class*/
 class Vegetable : public Product {
@@ -92,9 +94,8 @@ private:
 public: 
     // Constructor with initializer list
     Vegetable(int id = 0, string name = "NA", double price = 0.0, int shelf = 0, 
-              long addDate = 0, int expiryYear = 0, int expiryMonth = 0, int expiryDay = 0,
-              double weight = 0.0)
-    : Product(id, std::move(name), price, shelf, addDate, expiryYear, expiryMonth, expiryDay),
+              long addDate = 0, long expiryDate = 0, double weight = 0.0)
+    : Product(id, std::move(name), price, shelf, addDate, expiryDate),
       weight(weight) {}
 
     // Overridden method to include new behavior or attributes for Vegetable
@@ -119,9 +120,8 @@ private:
 public: 
     // Constructor with initializer list
     Fruit(int id = 0, string name = "NA", double price = 0.0, int shelf = 0, 
-              long addDate = 0, int expiryYear = 0, int 
-              expiryMonth = 0, int expiryDay = 0, int quantity = 0)
-    : Product(id, std::move(name), price, shelf, addDate, expiryYear, expiryMonth, expiryDay),
+              long addDate = 0, long expiryDate = 0, int quantity = 0)
+    : Product(id, std::move(name), price, shelf, addDate, expiryDate),
       quantity(quantity) {}
 
     // Overridden method to include new behavior or attributes for Vegetable

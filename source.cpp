@@ -47,16 +47,26 @@ int main() {
                 products.push_back(std::move(fruit));
                 break;
             }
-            case 13: 
+            case 13: {
                 u->displayHeader();
                 for (const unique_ptr<Product>& product : products) {
                     product->displayProductInfo();
                 }
                 u->displayFooter();
                 break;
-            case 22:
+            }
+            case 14: { 
+                u->displayHeader();
+                for (const unique_ptr<Product>& product : products) {
+
+                }
+                u->displayFooter();
+                break;
+            }
+            case 22: {
                 cout << "Exiting the program." << endl;
                 return 0;
+            }
             default:
                 cout << "Invalid choice. Please select a valid option." << endl;
                 break;
