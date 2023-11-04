@@ -49,8 +49,10 @@ public:
         cout << "Enter product name: ";
         cin.ignore();
         getline(std::cin, name);
-        cout << "Enter shelf (number only): ";
-        cin >> shelf;
+        do {
+            cout << "Enter shelf (number only): ";
+            cin >> shelf;
+        } while( !u->validateInput());
 
         do {
             cout << "Enter expiry date (yyyy mm dd): ";
@@ -60,8 +62,10 @@ public:
         string eD = std::to_string(y)+"-"+std::to_string(m)+"-"+std::to_string(d);
         expiryDate = u->convertDateToTimestamp(eD);
 
-        cout << "Enter price (only number or decimal): ";
-        cin >> price;
+        do {
+            cout << "Enter price (only number or decimal): ";
+            cin >> price;
+        } while( !u->validateInput());
     }
     virtual void displayProductInfo() const {
         
@@ -104,8 +108,10 @@ public:
     }
     void addProduct() override {
         Product::addProduct(); // Call the base class method to reuse functionality
-        std::cout << "Enter weight (KG): ";
-        std::cin >> weight;
+        do {
+            std::cout << "Enter weight (KG): ";
+            std::cin >> weight;
+        } while ( !u->validateInput());
     }
     // Overridden method to display Vegetable-specific information
     void displayProductInfo() const override {
@@ -130,8 +136,10 @@ public:
     }
     void addProduct() override {
         Product::addProduct(); // Call the base class method to reuse functionality
-        std::cout << "Enter quantity (number only): ";
-        std::cin >> quantity;
+        do {
+            std::cout << "Enter quantity (number only): ";
+            std::cin >> quantity;
+        } while ( !u->validateInput());
     }
     // Overridden method to display Vegetable-specific information
     void displayProductInfo() const override {
@@ -139,4 +147,3 @@ public:
         std::cout << std::left << std::setw(6) << quantity << "PS" << endl;
     }
 };
-
