@@ -20,6 +20,7 @@ using std::vector;
 using std::left;
 using std::unique_ptr;
 using std::make_unique;
+using std::string;
 
 int main() {
 
@@ -65,6 +66,22 @@ int main() {
                 u->displayFooter();
                 break;
             }
+            case 15: {
+                int id = 0;
+                do {
+                    cout << "Enter ID number you want to search: ";
+                    cin >> id;
+                } while( !u->validateInput());
+                
+                for (const unique_ptr<Product>& product : products) {
+                    if (id == product->getId()) {
+                        /*edits that prticular object, thanks to polymorphism*/
+                        product->editProduct();
+                    } 
+                }
+                u->displayFooter();
+                break;
+            }
             case 22: {
                 cout << "Exiting the program." << endl;
                 return 0;
@@ -75,6 +92,3 @@ int main() {
         }
     }
 }
-
-
-
