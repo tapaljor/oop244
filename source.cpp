@@ -83,7 +83,9 @@ int main() {
                 break;
             }
             case 22: {
-                cout << "Exiting the program." << endl;
+                /*destroying objects when program is finished*/
+                cout << "Exiting the program..." << endl;
+                products.clear();
                 return 0;
             }
             default:
