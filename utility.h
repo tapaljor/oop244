@@ -2,13 +2,16 @@
 #include <chrono>
 #include <random>
 #include <iomanip>
+#include <cctype>
 
 // Rather than using the entire namespace, specify using declarations for individual entities.
 using std::string;
 using std::cout;
+using std::cin;
 using std::endl;
 using std::left;
 using std::setw;
+using std::to_string;
 
 // Utility functions and data are encapsulated in a class for better organization and encapsulation.
 class Utils {
@@ -35,7 +38,7 @@ public:
              << "2. Add Fruit" << endl
              << "12. Track Product" << endl
              << "13. Generate Report" << endl
-             << "14. Generate expired product" << endl
+             << "14. Generate Expired Product" << endl
              << "22. Exit" << endl
              << "Enter your choice: ";
     }
@@ -98,25 +101,32 @@ public:
         tm* localTime = std::localtime(&currentTime);
         return 1900 + localTime->tm_year;
     }
+    long convertDateToTimestamp(const std::string& date) {
+        std::tm tm = {};
+        std::istringstream ss(date);
 
-    // Function to convert a date in "YYYY-MM-DD" format to a Unix timestamp
-long convertDateToTimestamp(const std::string& date) {
-    std::tm tm = {};
-    std::istringstream ss(date);
+        // Use std::get_time to parse the date string into a std::tm object
+        ss >> std::get_time(&tm, "%Y-%m-%d");
 
-    // Use std::get_time to parse the date string into a std::tm object
-    ss >> std::get_time(&tm, "%Y-%m-%d");
+        // Check if the date is valid
+        if(ss.fail()) {
+            std::cerr << "Failed to parse date: " << date << std::endl;
+            return -1;
+        }
 
-    // Check if the date is valid
-    if(ss.fail()) {
-        std::cerr << "Failed to parse date: " << date << std::endl;
-        return -1;
+        // Convert tm to time_t and then to a timestamp
+        time_t time = mktime(&tm);
+        return static_cast<long>(time);
     }
-
-    // Convert tm to time_t and then to a timestamp
-    time_t time = mktime(&tm);
-    return static_cast<long>(time);
-}
-
+    /*checking value n is valid or not*/
+    bool validateInput() {
+        
+        if (cin.fail() || cin.peek() != '\n') {
+            cin.clear();            // Clear the error state
+            cin.ignore(1000, '\n'); // Ignore the rest of the input line
+            return false;
+        }
+        return true;
+    }
 };
 
