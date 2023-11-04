@@ -19,7 +19,7 @@ using std::vector;
 /*base class*/
 class Product {
 protected:
-    int id;
+    long id;
     string name;
     double price;
     int shelf;
@@ -48,7 +48,7 @@ public:
              
         cout << "Enter product name: ";
         cin.ignore();
-        getline(std::cin, name);
+        getline(cin, name);
         do {
             cout << "Enter shelf (number only): ";
             cin >> shelf;
@@ -67,9 +67,33 @@ public:
             cin >> price;
         } while( !u->validateInput());
     }
+    virtual void editProduct() {
+        int y, m, d = 0;
+        /*edits all the base attributes*/
+        cout << "Enter name: ";
+        cin.ignore();
+        getline(cin, name);
+                        
+        do {
+            cout << "Enter shelf (number only): ";
+            cin >> shelf;
+        } while( !u->validateInput());
+
+        do {
+            cout << "Enter expiry date (yyyy mm dd): ";
+            cin >> y >> m >> d;
+        } while (!u->checkDate(y, m, d));
+        string eD = std::to_string(y)+"-"+std::to_string(m)+"-"+std::to_string(d);
+        expiryDate = u->convertDateToTimestamp(eD);
+                        
+        do {
+            cout << "Enter price (only number or decimal): ";
+            cin >> price;
+        } while( !u->validateInput());
+    }
     virtual void displayProductInfo() const {
         
-        cout << left << setw(13) << id 
+        cout << left << setw(10) << id 
          << left << setw(20) << name.substr(0, 18)   
          << left << setw(10) << calculateTotalPrice() 
          << left << setw(6) << shelf  
@@ -77,6 +101,19 @@ public:
          << left << setw(15) << u->displayFormattedDate(expiryDate);
     }
 
+    /*setters*/
+    void setName(const string str) {
+        name = str;
+    }
+    void setShelf(const int s) {
+        shelf = s;
+    }
+    void setExpiryDate(const long eD) {
+        expiryDate = eD;
+    }
+    void setPrice(const double pr) {
+        price = pr;
+    }
     // Getters can be made const
     int getId() const {
         return id;
@@ -113,6 +150,13 @@ public:
             std::cin >> weight;
         } while ( !u->validateInput());
     }
+    void editProduct() override {
+        Product::editProduct();
+        do {
+            cout << "Enter weight (number or decimal only): ";
+            cin >> weight;
+        } while( !u->validateInput());
+    }
     // Overridden method to display Vegetable-specific information
     void displayProductInfo() const override {
         Product::displayProductInfo(); // Call the base class method to display common product info
@@ -137,8 +181,15 @@ public:
     void addProduct() override {
         Product::addProduct(); // Call the base class method to reuse functionality
         do {
-            std::cout << "Enter quantity (number only): ";
-            std::cin >> quantity;
+            cout << "Enter quantity (number only): ";
+            cin >> quantity;
+        } while ( !u->validateInput());
+    }
+    void editProduct() override {
+        Product::editProduct();
+        do {
+            cout << "Enter quantity (number only): ";
+            cin >> quantity;
         } while ( !u->validateInput());
     }
     // Overridden method to display Vegetable-specific information
