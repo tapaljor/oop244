@@ -25,14 +25,13 @@ protected:
     int shelf;
     long addDate;
     long expiryDate;
-    Utils *u;
 public:
+    Utils *u; /*declaring utility namespace, which has miscellaneous functions*/
     // Constructors 
     Product(int id = 0, string name = "NA", double price = 0.0, 
             int shelf = 0, long addDate = 0, long expiryDate = 0) 
             : id(id), name(std::move(name)), price(price), 
             shelf(shelf), addDate(addDate), expiryDate(expiryDate) {} 
-
     virtual ~Product() {}
 
     virtual double calculateTotalPrice() const {
