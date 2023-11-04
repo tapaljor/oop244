@@ -55,10 +55,12 @@ int main() {
                 u->displayFooter();
                 break;
             }
-            case 14: { 
+            case 14: {
                 u->displayHeader();
                 for (const unique_ptr<Product>& product : products) {
-
+                    if (u->generateCurrentTimeStamp() > product->getExpiryDate()) {
+                        product->displayProductInfo();
+                    } 
                 }
                 u->displayFooter();
                 break;
