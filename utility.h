@@ -19,7 +19,7 @@ public:
     static void displayHeader() {
         cout << endl << "Product Report:" << endl;
         cout << string(90, '-') << endl;
-        cout << left << setw(13) << "ID"
+        cout << left << setw(10) << "ID"
              << left << setw(20) << "Name"
              << left << setw(10) << "Total"
              << left << setw(6)  << "Shelf"
@@ -30,17 +30,21 @@ public:
         cout << string(90, '-') << endl;
     }
     static void displayFooter() {
-        cout << string(89, '-') << endl;
+        cout << string(90, '-') << endl;
     }
     static void menu() {
-        cout << "Menu:" << endl
-             << "1. Add Vegetable" << endl
+        cout << string(30, '-') << endl;
+        cout << "MENU" << endl;
+        cout << string(30, '-') << endl;
+        cout << "1. Add Vegetable" << endl
              << "2. Add Fruit" << endl
              << "12. Track Product" << endl
-             << "13. Generate Report" << endl
+             << "13. View All" << endl
              << "14. Generate Expired Product" << endl
-             << "22. Exit" << endl
-             << "Enter your choice: ";
+             << "15. Edit data" << endl
+             << "22. Exit" << endl;
+        cout << string(30, '-') << endl;
+        cout << "Enter your choice: ";
     }
       /*displaying timestamp in readable date time*/
     string displayFormattedDate(long int const timeStamp) const {
@@ -57,7 +61,7 @@ public:
         return timeStamp < 1 ? "NA" : buffer;
     }
     /*random number generator*/
-    static int generateRandomNumber() {
+    static long generateRandomNumber() {
         /*get unique timestamp*/
         auto now = std::chrono::system_clock::now();
         std::time_t timestamp = std::chrono::system_clock::to_time_t(now);
@@ -65,12 +69,11 @@ public:
         std::random_device rd;
         std::mt19937 gen(rd());
 
-        // generate random no further 1-100
-        std::uniform_int_distribution<int> distribution(1, 100); 
+        std::uniform_int_distribution<int> distribution(100, 500); 
         int randomNum = distribution(gen);
 
         /*add timestamp and random number to make make duplicate-free*/
-        return timestamp + randomNum;
+        return timestamp / randomNum;
     }
     /*current timestamp generator*/
     static long int generateCurrentTimeStamp() {
@@ -129,4 +132,3 @@ public:
         return true;
     }
 };
-
