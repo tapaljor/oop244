@@ -69,50 +69,36 @@ public:
     virtual void editProduct() {
         int y, m, d = 0;
         /*edits all the base attributes*/
-        cout << "Enter name: ";
+        cout << "Enter new name: ";
         cin.ignore();
         getline(cin, name);
                         
         do {
-            cout << "Enter shelf (number only): ";
+            cout << "Enter new shelf (number only): ";
             cin >> shelf;
         } while( !u->validateInput());
 
         do {
-            cout << "Enter expiry date (yyyy mm dd): ";
+            cout << "Enter new expiry date (yyyy mm dd): ";
             cin >> y >> m >> d;
         } while (!u->checkDate(y, m, d));
         string eD = std::to_string(y)+"-"+std::to_string(m)+"-"+std::to_string(d);
         expiryDate = u->convertDateToTimestamp(eD);
                         
         do {
-            cout << "Enter price (only number or decimal): ";
+            cout << "Enter new price (only number or decimal): ";
             cin >> price;
         } while( !u->validateInput());
     }
     virtual void displayProductInfo() const {
         
-        cout << left << setw(10) << id 
+        cout << left << setw(14) << id 
          << left << setw(20) << name.substr(0, 18)   
          << left << setw(10) << calculateTotalPrice() 
-         << left << setw(6) << shelf  
-         << left << setw(15) << u->displayFormattedDate(addDate) 
-         << left << setw(15) << u->displayFormattedDate(expiryDate);
+         << left << setw(4) << shelf;
     }
+    virtual double getQuantity() const {};
 
-    /*setters*/
-    void setName(const string str) {
-        name = str;
-    }
-    void setShelf(const int s) {
-        shelf = s;
-    }
-    void setExpiryDate(const long eD) {
-        expiryDate = eD;
-    }
-    void setPrice(const double pr) {
-        price = pr;
-    }
     // Getters can be made const
     int getId() const {
         return id;
@@ -123,7 +109,13 @@ public:
     double getPrice() const {
         return price;
     }
-    int getExpiryDate () const {
+    int getShelf() const {
+        return shelf;
+    }
+    long getAddDate() const {
+        return addDate;
+    }
+    long getExpiryDate () const {
         return expiryDate;
     }
 };
@@ -145,21 +137,26 @@ public:
     void addProduct() override {
         Product::addProduct(); // Call the base class method to reuse functionality
         do {
-            std::cout << "Enter weight (KG): ";
-            std::cin >> weight;
+            cout << "Enter weight (KG): ";
+            cin >> weight;
         } while ( !u->validateInput());
     }
     void editProduct() override {
         Product::editProduct();
         do {
-            cout << "Enter weight (number or decimal only): ";
+            cout << "Enter new weight (number or decimal only): ";
             cin >> weight;
         } while( !u->validateInput());
     }
     // Overridden method to display Vegetable-specific information
     void displayProductInfo() const override {
         Product::displayProductInfo(); // Call the base class method to display common product info
-        std::cout << std::left << std::setw(6) << weight << "KG" <<endl;
+        cout << left << setw(6) << weight 
+            << left << setw(5) << "KG";
+    }
+    //getter
+    double getQuantity() const override {
+        return weight;
     }
 };
 /*derive class/inheritance class*/
@@ -187,13 +184,45 @@ public:
     void editProduct() override {
         Product::editProduct();
         do {
-            cout << "Enter quantity (number only): ";
+            cout << "Enter new quantity (number only): ";
             cin >> quantity;
         } while ( !u->validateInput());
     }
     // Overridden method to display Vegetable-specific information
     void displayProductInfo() const override {
         Product::displayProductInfo(); // Call the base class method to display common product info
-        std::cout << std::left << std::setw(6) << quantity << "PS" << endl;
+        cout << left << setw(6) << quantity 
+            << left << setw(5) << "PS";
+    }
+    //getter
+    double getQuantity() const {
+        double d = quantity;
+        return d;
     }
 };
+class saleProduct {
+private: 
+    int id;
+    double saleQuantity;
+    long soldDate;
+public:    
+    Utils* u;
+    saleProduct(int id = 0, double saleQuantity = 0.0, long soldDate = 0):
+        id(id), saleQuantity(saleQuantity), soldDate(u->generateCurrentTimeStamp()) {}
+
+    //setters
+    double setQuantity(double qty) {
+        saleQuantity = qty;
+    }
+    //getters
+    int getId() const {
+        return id;
+    }
+    double getQuantity() const {
+        return saleQuantity;
+    }
+    long getSoldDate() const {
+        return soldDate;
+    } 
+};
+

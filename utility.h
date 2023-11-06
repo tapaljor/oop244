@@ -18,19 +18,19 @@ class Utils {
 public:
     static void displayHeader() {
         cout << endl << "Product Report:" << endl;
-        cout << string(90, '-') << endl;
-        cout << left << setw(10) << "ID"
+        cout << string(80, '-') << endl;
+        cout << left << setw(14) << "ID"
              << left << setw(20) << "Name"
              << left << setw(10) << "Total"
-             << left << setw(6)  << "Shelf"
-             << left << setw(15) << "Add Date"
-             << left << setw(15) << "Expiry Date" 
+             << left << setw(4)  << "Sh"
              << left << setw(6) << "Qty" 
-             << left << setw(6) << "Unit" << endl;
-        cout << string(90, '-') << endl;
+             << left << setw(5) << "Unit"
+             << left << setw(6) << "Sale" 
+             << left << setw(15) << "Avai" << endl;
+        cout << string(80, '-') << endl;
     }
     static void displayFooter() {
-        cout << string(90, '-') << endl;
+        cout << string(80, '-') << endl;
     }
     static void menu() {
         cout << string(30, '-') << endl;
@@ -38,13 +38,14 @@ public:
         cout << string(30, '-') << endl;
         cout << "1. Add Vegetable" << endl
              << "2. Add Fruit" << endl
-             << "12. Track Product" << endl
-             << "13. View All" << endl
+             << "12. View All" << endl
+             << "13. View Detail" << endl
              << "14. Generate Expired Product" << endl
-             << "15. Edit data" << endl
+             << "15. Edit Data" << endl
+             << "16. Delete Data" << endl
+             << "17. Add Sales" << endl
              << "22. Exit" << endl;
         cout << string(30, '-') << endl;
-        cout << "Enter your choice: ";
     }
       /*displaying timestamp in readable date time*/
     string displayFormattedDate(long int const timeStamp) const {
@@ -66,14 +67,15 @@ public:
         auto now = std::chrono::system_clock::now();
         std::time_t timestamp = std::chrono::system_clock::to_time_t(now);
     
-        std::random_device rd;
+        /*std::random_device rd;
         std::mt19937 gen(rd());
 
         std::uniform_int_distribution<int> distribution(100, 500); 
         int randomNum = distribution(gen);
 
         /*add timestamp and random number to make make duplicate-free*/
-        return timestamp / randomNum;
+        return timestamp;
+        // / randomNum;
     }
     /*current timestamp generator*/
     static long int generateCurrentTimeStamp() {
